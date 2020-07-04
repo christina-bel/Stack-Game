@@ -7,7 +7,7 @@ namespace Stack_Game.Accessory
     {
         public override string AddAccessory()
         {
-            return "Броня";
+            return "в броне";
         }
     }
 }

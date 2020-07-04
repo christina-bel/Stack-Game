@@ -44,22 +44,18 @@ namespace Stack_Game
                     continue;
                 
                 Random random = new Random();
-                int indexSpecial = random.Next(0, specialUnits.Count);
+                int indexSpecial = random.Next(0, specialUnits.Count - 1);
                 var targetUnits = GetTargets(first, second, specialUnits[indexSpecial]);
                 
                 if (targetUnits.Count == 0)
                     continue;
 
-                int indexTargets = random.Next(0, targetUnits.Count);
+                int indexTargets = random.Next(0, targetUnits.Count - 1);
 
                 IUnit beforeSpecialAction = targetUnits[indexTargets].Copy();
                 IUnit afterSpecialAction = specialUnits[indexSpecial].DoSpecialAction(targetUnits[indexTargets]);
 
                 StepInfo += "\n\t\t\tОСОБОЕ ДЕЙСТВИЕ";
-                
-
-
-
 
                 if (specialUnits[indexSpecial] is Archer)
                 {
@@ -85,7 +81,7 @@ namespace Stack_Game
                     }
                     else
                     {
-                        StepInfo += $"\nНикто НЕ ВЫЛЕЧЕН в Армии {first.ArmyName}\n";
+                        StepInfo += $"\nДоктор заснул после дежурства! Никто НЕ ВЫЛЕЧЕН в Армии {first.ArmyName}\n";
                     }
                 }
 
@@ -99,21 +95,22 @@ namespace Stack_Game
                     }
                     else
                     {
-                        StepInfo += $"\nНИКТО НЕ КЛОНИРОВАН {first.ArmyName}\n";
+                        StepInfo += $"\nМаг столкнулся с проблемой ДНК. НИКТО НЕ КЛОНИРОВАН {first.ArmyName}\n";
                     }
                 }
                 else if (specialUnits[indexSpecial] is Infantry)
-                {
-                    if (afterSpecialAction != null)
                     {
+                    if (afterSpecialAction.Name != beforeSpecialAction.Name)
+                    {
+                        targetUnits[indexTargets] = afterSpecialAction;
                         StepInfo += $"\nАрмия {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\tОДЕВАЕТ!\n\nАрмия {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
-                        StepInfo += $"\nАрмия {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ОДЕТ В СПЕЦИАЛЬНУЮ ЭКИПИРОВКУ.\n";
+                        StepInfo += $"\nАрмия {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ОДЕТ В СПЕЦИАЛЬНУЮ АМУНИЦИЮ!\n";
+
                     }
                     else
                     {
-                        StepInfo += $"\nНИКТО НЕ ОДЕТ {first.ArmyName}\n";
+                        StepInfo += $"\nХодоки украли амуницию! НИКТО НЕ ОДЕТ в армии {first.ArmyName}\n";
                     }
-
                 }
             }
         }
@@ -196,7 +193,7 @@ namespace Stack_Game
         private List<IUnit> GetFirstLine(IArmy army)
         {
             var firstLine = new List<IUnit>();
-            var unitsInRow = Math.Min(GameStrategy.SizeOfRow, army.Count()); //количество бойцов в ряду
+            var unitsInRow = Math.Min(GameStrategy.SizeOfRow, army.Count());
             for (int i = 0; i < unitsInRow; i++)
                 firstLine.Add(army[army.Count() - 1 - i]);
             return firstLine;

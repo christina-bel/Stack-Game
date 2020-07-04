@@ -8,7 +8,7 @@ namespace Stack_Game.Accessory
     {
         public override string AddAccessory()
         {
-            return "Пик";
+            return "с пикой в руках";
         }
     }
 }

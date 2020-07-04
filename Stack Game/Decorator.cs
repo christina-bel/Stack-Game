@@ -42,9 +42,9 @@ namespace Stack_Game
         public override string AddAccessory()
         {
             
-            unit.Name += " " + base.AddAccessory();
-            unit.Defence += 15;
-            return unit.Name;
+           this.unit.Name += " " + base.AddAccessory();
+            this.unit.Defence += 15;
+            return this.unit.Name;
         }
 
         public IUnit GetUnit()

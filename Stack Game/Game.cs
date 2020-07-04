@@ -12,7 +12,7 @@ namespace Stack_Game
         CommandManager commandManager;
         public void Start()
         {
-            Console.WriteLine("STACKWAR GAME!");
+            Console.WriteLine("\t\t\t\t\t\t  STACKWAR GAME!!!");
             Console.WriteLine("\nВыберите стратегию игры:");
             Console.WriteLine("1. Один на один");
             Console.WriteLine("2. Три на три");
@@ -41,11 +41,11 @@ namespace Stack_Game
                     int price;
                     while (!int.TryParse(Console.ReadLine(), out price))
                         Console.WriteLine("Необходимо ввести целочисленоое значение");
-                    firstArmy = armyFactory.CreateArmy(price, "Black");
+                    firstArmy = armyFactory.CreateArmy(price, "Ланнистеры");
                     Console.WriteLine("\nВведите сумму, на которую необходимо создать вторую армию:");
                     while (!int.TryParse(Console.ReadLine(), out price))
                         Console.WriteLine("Необходимо ввести целочисленоое значение");
-                    secondArmy = armyFactory.CreateArmy(price, "White");
+                    secondArmy = armyFactory.CreateArmy(price, "Старки");
                     if (strategy == "1")
                         strt = new OneToOneStrategy();
                     else if (strategy == "2")

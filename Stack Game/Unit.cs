@@ -101,27 +101,28 @@ namespace Stack_Game
             if (Health > 100)
                 Health = 100;
         }
-
-        public IUnit DoSpecialAction(IUnit unit)
+       
+    public IUnit DoSpecialAction(IUnit unit)
         {
             
             if (unit is IAmmunition)
             {
-                
+               
                 AccessoryComponent accessory = GetAccessory((IAmmunition)(unit));
                 if (accessory == null)
                     return unit;
 
                 var decorAmmun = new AccessoryDecorator(accessory, unit);
 
-               return decorAmmun.GetUnit();
+                decorAmmun.AddAccessory();
+                return decorAmmun.GetUnit();
                // unit = decorAmmun.GetUnit();
             }
             return unit;
         }
 
-        private AccessoryComponent GetAccessory(IAmmunition unit)
-        {
+    private AccessoryComponent GetAccessory(IAmmunition unit)
+     {
             Random random = new Random();
             AccessoryComponent accessory = null;
             int cloth = 0;
@@ -129,7 +130,10 @@ namespace Stack_Game
             
             if (unit.Access == null)
                 unit.Access = new Dictionary<int, string>();
-            
+
+            foreach (var n in unit.Access)
+                Console.WriteLine(n);
+
             while (end) {
                 if (unit.Access.Count == 4)
                     return null;
