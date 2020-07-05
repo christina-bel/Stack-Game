@@ -98,22 +98,32 @@ namespace Stack_Game
         {
             Invoke(new PlayTillEndCommand(battle));
         }
-        public void Undo()
+        public void Undo(out bool pos)
         {
-            if (UndoStack.Count != 0)
+            if (UndoStack.Count != 0 && !battle.GameOver)
             {
                 ICommand command = UndoStack.Pop();
                 command.Undo();
                 RedoStack.Push(command);
+                pos = true;
+            }
+            else
+            {
+                pos = false;
             }
         }
-        public void Redo()
+        public void Redo(out bool pos)
         {
             if (RedoStack.Count != 0)
             {
                 ICommand command = RedoStack.Pop();
                 command.Redo();
                 UndoStack.Push(command);
+                pos = true;
+            }
+            else
+            {
+                pos = false;
             }
         }
         private void Invoke(ICommand newCommand)

@@ -42,7 +42,7 @@ namespace Stack_Game
             public static readonly int Price = 80;
             public static readonly int Attack = 30;
             public static readonly int Defence = 30;
-            public static readonly string Name = "Доктор";
+            public static readonly string Name = "Целитель";
             public static readonly int Range = 1;
             public static readonly int Strength = 50;
         }

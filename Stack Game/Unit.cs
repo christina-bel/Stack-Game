@@ -116,7 +116,6 @@ namespace Stack_Game
 
                 decorAmmun.AddAccessory();
                 return decorAmmun.GetUnit();
-               // unit = decorAmmun.GetUnit();
             }
             return unit;
         }
@@ -130,9 +129,6 @@ namespace Stack_Game
             
             if (unit.Access == null)
                 unit.Access = new Dictionary<int, string>();
-
-            foreach (var n in unit.Access)
-                Console.WriteLine(n);
 
             while (end) {
                 if (unit.Access.Count == 4)

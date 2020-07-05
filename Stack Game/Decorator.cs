@@ -35,21 +35,20 @@ namespace Stack_Game
     {
         IUnit unit { get; set; }
 
-        public AccessoryDecorator(AccessoryComponent comp, IUnit unit) : base(comp)
+        public AccessoryDecorator(AccessoryComponent comp, IUnit un) : base(comp)
         {
-            this.unit = unit;
+            unit = un;
         }
         public override string AddAccessory()
         {
-            
-           this.unit.Name += " " + base.AddAccessory();
-            this.unit.Defence += 15;
-            return this.unit.Name;
+           unit.Name += " " + base.AddAccessory();
+           unit.Defence += 15;
+           return unit.Name;
         }
 
         public IUnit GetUnit()
         {
-            return this.unit;
+            return unit;
         }
     }
 }

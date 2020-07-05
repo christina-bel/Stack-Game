@@ -5,19 +5,29 @@ namespace Stack_Game
 {
     class Game
     {
-        string strategy;
+        int strategy;
         IArmy firstArmy, secondArmy;
         IStrategy strt;
         Battle battle;
+        bool possible = false;
         CommandManager commandManager;
         public void Start()
         {
-            Console.WriteLine("\t\t\t\t\t\t  STACKWAR GAME!!!");
-            Console.WriteLine("\nВыберите стратегию игры:");
+            Console.WriteLine();
+            Console.WriteLine("\t\t\t\t\t##############################");
+            Console.WriteLine("\t\t\t\t\t#                            #");
+            Console.WriteLine("\t\t\t\t\t#                            #");
+            Console.WriteLine("\t\t\t\t\t#       STACKWAR GAME!!!     #");
+            Console.WriteLine("\t\t\t\t\t#                            #");
+            Console.WriteLine("\t\t\t\t\t#                            #");
+            Console.WriteLine("\t\t\t\t\t##############################");
+            Console.WriteLine();
+            Console.WriteLine("Выберите стратегию игры:");
             Console.WriteLine("1. Один на один");
             Console.WriteLine("2. Три на три");
             Console.WriteLine("3. Стенка на стенку\n");
-            strategy = Console.ReadLine();
+            while (!int.TryParse(Console.ReadLine(), out strategy))
+                Console.WriteLine("Необходимо ввести число от 1 до 3");
             Menu();
         }
 
@@ -31,6 +41,7 @@ namespace Stack_Game
             Console.WriteLine("6. Играть до конца");
             Console.WriteLine("7. Уведомлять о гибели бойцов");
             Console.WriteLine("8. Отменить уведомления о гибели бойцов");
+            Console.WriteLine();
             var answ = Console.ReadLine();
             Console.WriteLine();
             switch (answ)
@@ -41,14 +52,14 @@ namespace Stack_Game
                     int price;
                     while (!int.TryParse(Console.ReadLine(), out price))
                         Console.WriteLine("Необходимо ввести целочисленоое значение");
-                    firstArmy = armyFactory.CreateArmy(price, "Ланнистеры");
+                    firstArmy = armyFactory.CreateArmy(price, "ЛАННИСТЕРЫ");
                     Console.WriteLine("\nВведите сумму, на которую необходимо создать вторую армию:");
                     while (!int.TryParse(Console.ReadLine(), out price))
                         Console.WriteLine("Необходимо ввести целочисленоое значение");
-                    secondArmy = armyFactory.CreateArmy(price, "Старки");
-                    if (strategy == "1")
+                    secondArmy = armyFactory.CreateArmy(price, "СТАРКИ");
+                    if (strategy == 1)
                         strt = new OneToOneStrategy();
-                    else if (strategy == "2")
+                    else if (strategy == 2)
                         strt = new ThreeToThreeStrategy();
                    else
                     {
@@ -56,7 +67,7 @@ namespace Stack_Game
                     }
                     battle = new Battle(firstArmy, secondArmy, strt);
                     commandManager = new CommandManager(battle);
-                    Logger($"Армии созданы\n\n{battle.ArmyInfo()}");
+                    Logger($"\n\n\t\t\t------Армии СОЗДАНЫ------\n\n{battle.ArmyInfo()}");
                     Console.ReadLine();
                     Menu();
                     break;
@@ -77,15 +88,21 @@ namespace Stack_Game
                     break;
 
                 case "4":
-                    commandManager.Undo();
-                    Logger("Отмена предыдущего хода");
+                    commandManager.Undo(out possible);
+                    if (possible)
+                        Logger("Отмена предыдущего хода");
+                    else
+                        Console.WriteLine("\nОтмена хода не может быть выполнена\n");
                     Console.ReadLine();
                     Menu();
                     break;
 
                 case "5":
-                    commandManager.Redo();
-                    Logger("Ход снова выполнен");
+                    commandManager.Redo(out possible);
+                    if (possible)
+                        Logger("Ход снова выполнен");
+                    else
+                        Console.WriteLine("\nВозврат хода не может быть выполнен\n");
                     Console.ReadLine();
                     Menu();
                     break;
