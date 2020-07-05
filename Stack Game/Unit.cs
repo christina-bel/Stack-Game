@@ -59,17 +59,17 @@ namespace Stack_Game
     {
         void Treat(int health);
     }
+    public interface ICloneable
+    {
+        IUnit Copy();
+    }
 
     public interface IAmmunition
     {
         Dictionary<int, string> Access { get; set; }
     }
-    public interface IClonable
-    {
-        IUnit Copy();
-    }
-
-    class Infantry : Unit, IUnit, ITreatable, IClonable, ISpecialAction
+  
+    class Infantry : Unit, IUnit, ITreatable, ICloneable, ISpecialAction
     {
         public int SpecialActionStrength { get; set; }
         public int SpecialActionRange { get; set; }
@@ -101,13 +101,13 @@ namespace Stack_Game
             if (Health > 100)
                 Health = 100;
         }
-       
-    public IUnit DoSpecialAction(IUnit unit)
+
+        public IUnit DoSpecialAction(IUnit unit)
         {
-            
+
             if (unit is IAmmunition)
             {
-               
+
                 AccessoryComponent accessory = GetAccessory((IAmmunition)(unit));
                 if (accessory == null)
                     return unit;
@@ -120,25 +120,26 @@ namespace Stack_Game
             return unit;
         }
 
-    private AccessoryComponent GetAccessory(IAmmunition unit)
-     {
+        private AccessoryComponent GetAccessory(IAmmunition unit)
+        {
             Random random = new Random();
             AccessoryComponent accessory = null;
             int cloth = 0;
             bool end = true;
-            
+
             if (unit.Access == null)
                 unit.Access = new Dictionary<int, string>();
 
-            while (end) {
+            while (end)
+            {
                 if (unit.Access.Count == 4)
                     return null;
                 cloth = random.Next(0, 4);
                 if (unit.Access.ContainsKey(cloth))
                     continue;
                 else
-                   end = false;
-            }      
+                    end = false;
+            }
             switch (cloth)
             {
                 case 0:
@@ -188,7 +189,7 @@ namespace Stack_Game
 
         }
     }
-    class Archer : Unit, IUnit, ISpecialAction, ITreatable, IClonable
+    class Archer : Unit, IUnit, ISpecialAction, ITreatable, ICloneable
     {
         public int SpecialActionStrength { get; set; }
         public int SpecialActionRange { get; set; }
@@ -324,9 +325,9 @@ namespace Stack_Game
 
         public IUnit DoSpecialAction(IUnit unit)
         {
-            if (unit is IClonable)
+            if (unit is ICloneable)
             {
-                return ((IClonable)unit).Copy();
+                return ((ICloneable)unit).Copy();
             }
             else return null;
         }

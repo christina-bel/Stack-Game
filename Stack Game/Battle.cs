@@ -20,7 +20,7 @@ namespace Stack_Game
         }
         public string ArmyInfo()
         {
-            return $"{GameStrategy.Info(FirstArmy)}\n\n\n\t\t\t------VS------\n\n\n{GameStrategy.Info(SecondArmy)}";
+            return $"{GameStrategy.Info(FirstArmy)}\n\n\n\t\t\t---------VS---------\n\n\n{GameStrategy.Info(SecondArmy)}";
         }
         public void Subscribe()
         {
@@ -55,29 +55,29 @@ namespace Stack_Game
                 IUnit beforeSpecialAction = targetUnits[indexTargets].Copy();
                 IUnit afterSpecialAction = specialUnits[indexSpecial].DoSpecialAction(targetUnits[indexTargets]);
 
-                StepInfo += "\n\n\t\t\t------ОСОБОЕ ДЕЙСТВИЕ------";
+                StepInfo += "\n\n\t\t\t-----ОСОБОЕ ДЕЙСТВИЕ-----";
 
                 if (specialUnits[indexSpecial] is Archer)
                 {
-                    StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t------СТРЕЛЯЕТ ИЗ ЛУКА В------\n\n в Армию {second.ArmyName} - {beforeSpecialAction.GetInfo()}";
+                    StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t|--|--СТРЕЛЯЕТ ИЗ ЛУКА В--|--|\n\nв Армию {second.ArmyName} - {beforeSpecialAction.GetInfo()}";
 
                     if (afterSpecialAction == specialUnits[indexSpecial])
                     {
-                        StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nв Армии {second.ArmyName} ПОГИБАЕТ {targetUnits[indexTargets].Name}\n";
+                        StepInfo += $"\n\n\t\t\t -------ИТОГ-------\n\nв Армии {second.ArmyName} ПОГИБАЕТ {targetUnits[indexTargets].Name}\n";
                         if (Subscribed == true)
                             StepInfo += $"\n\n\t\t\t{second.NotifyAboutDeath()}\n\n";
                         second.Remove(targetUnits[indexTargets]);
                     }
                     else
-                        StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nв Армии {second.ArmyName} РАНЕН {targetUnits[indexTargets].GetInfo()}\n";
+                        StepInfo += $"\n\n\t\t\t -------ИТОГ-------\n\nв Армии {second.ArmyName} РАНЕН {targetUnits[indexTargets].GetInfo()}\n";
                 }
 
                 else if (specialUnits[indexSpecial] is Healer)
                 {
                     if (afterSpecialAction != null)
                     {
-                        StepInfo += $"\n\nв Армии{first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t------ЛЕЧИТ------\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
-                        StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ВЫЛЕЧЕН\n";
+                        StepInfo += $"\n\nв Армии{first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t|---|---ЛЕЧИТ---|---|\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
+                        StepInfo += $"\n\n\t\t\t -------ИТОГ-------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ВЫЛЕЧЕН\n";
                     }
                     else
                         StepInfo += $"\n\nЦелитель уснул после ночного дежурства! Никто НЕ ВЫЛЕЧЕН в Армии {first.ArmyName}\n";
@@ -88,8 +88,8 @@ namespace Stack_Game
                 {
                     if (afterSpecialAction != null)
                     {
-                        StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t------КЛОНИРУЕТ------\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
-                        StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} УСПЕШНО КЛОНИРОВАН.\n";
+                        StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t|---|---КЛОНИРУЕТ---|---|\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
+                        StepInfo += $"\n\n\t\t\t -------ИТОГ-------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} УСПЕШНО КЛОНИРОВАН.\n";
                         first.Push(afterSpecialAction);
                     }
                     else
@@ -102,8 +102,8 @@ namespace Stack_Game
                     if (afterSpecialAction.Name != beforeSpecialAction.Name)
                     {
                         targetUnits[indexTargets] = afterSpecialAction;
-                        StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t------ОДЕВАЕТ------\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
-                        StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ОДЕТ В СПЕЦИАЛЬНУЮ АМУНИЦИЮ!\n";
+                        StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t|---|---ОДЕВАЕТ---|---|\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
+                        StepInfo += $"\n\n\t\t\t -------ИТОГ-------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ОДЕТ В СПЕЦИАЛЬНУЮ АМУНИЦИЮ!\n";
 
                     }
                     else
@@ -142,7 +142,7 @@ namespace Stack_Game
             }
             else
             {
-                StepInfo = "\n\t\t\t------FIGHT!------\n";
+                StepInfo = "\n\n\t\t\t|---|---БИТВА---|---|\n";
                 Fight(FirstArmy, SecondArmy);
                 Fight(SecondArmy, FirstArmy);
                 DoSpecialAction(FirstArmy, SecondArmy);
@@ -184,13 +184,13 @@ namespace Stack_Game
             {
                 IUnit Attecker = firstLineFirstArmy[i];
                 IUnit Defender = firstLineSecondArmy[i];
-                StepInfo += $"\n\nАрмия {firstArmy.ArmyName} - {Attecker.GetInfo()}\n\n\t\t\t------СРАЖАЕТСЯ С------\n\nАрмией {secondArmy.ArmyName} - {Defender.GetInfo()}\n";
+                StepInfo += $"\n\nАрмия {firstArmy.ArmyName} - {Attecker.GetInfo()}\n\n\t\t\t|--|--СРАЖАЕТСЯ С--|--|\n\nАрмией {secondArmy.ArmyName} - {Defender.GetInfo()}\n";
                 IUnit attackedUnit = Attecker.Fight(Defender);
                 if (attackedUnit == null)
-                    StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nАрмия {secondArmy.ArmyName} АТТАКОВАНА! Пострадал {Defender.GetInfo()}!\n";
+                    StepInfo += $"\n\t\t\t -------ИТОГ-------\n\nАрмия {secondArmy.ArmyName} АТТАКОВАНА! Пострадал {Defender.GetInfo()}!\n";
                 else
                 {
-                    StepInfo += $"\n\n\t\t\t------ИТОГ------\n\nВ армии {secondArmy.ArmyName} СМЕРТЬ! Погиб {Defender.Name}!\n";
+                    StepInfo += $"\n\t\t\t -------ИТОГ-------\n\nВ армии {secondArmy.ArmyName} СМЕРТЬ! Погиб {Defender.Name}!\n";
                     if (Subscribed == true)
                         StepInfo += $"\n\t\t\t{secondArmy.NotifyAboutDeath()}\n";
                     secondArmy.Remove(attackedUnit);

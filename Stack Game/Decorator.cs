@@ -42,7 +42,12 @@ namespace Stack_Game
         public override string AddAccessory()
         {
            unit.Name += " " + base.AddAccessory();
-           unit.Defence += 15;
+            if (component is HorseComponent)
+                unit.Health += 15;
+            else if (component is HelmetComponent || component is ArmorComponent)
+                unit.Defence += 15;
+            else
+                unit.Attack += 15;
            return unit.Name;
         }
 

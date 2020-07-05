@@ -127,7 +127,8 @@ namespace Stack_Game
                     Console.ReadLine();
                     Menu();
                     break;
-                
+
+
                 default:
                     Console.WriteLine("Неверный ввод! Данного пункта не существует! Попробуйте еще раз!");
                     Console.ReadLine();
