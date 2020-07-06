@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Stack_Game
+namespace Stack_Game.Units
 {
     public static class DefaultSettings
     {

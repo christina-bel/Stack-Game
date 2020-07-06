@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stack_Game.Units;
+using System;
 using System.Collections.Generic;
 
 namespace Stack_Game
@@ -99,8 +100,8 @@ namespace Stack_Game
                 }
                 else if (specialUnits[indexSpecial] is Infantry)
                     {
-                    if (afterSpecialAction.Name != beforeSpecialAction.Name)
-                    {
+                    if (afterSpecialAction != null)
+                        {
                         targetUnits[indexTargets] = afterSpecialAction;
                         StepInfo += $"\n\nв Армии {first.ArmyName} - {((IUnit)specialUnits[indexSpecial]).GetInfo()}\n\n\t\t\t|---|---ОДЕВАЕТ---|---|\n\n в Армии {first.ArmyName} - {beforeSpecialAction.GetInfo()}";
                         StepInfo += $"\n\n\t\t\t -------ИТОГ-------\n\nв Армии {first.ArmyName} - {targetUnits[indexTargets].GetInfo()} ОДЕТ В СПЕЦИАЛЬНУЮ АМУНИЦИЮ!\n";
